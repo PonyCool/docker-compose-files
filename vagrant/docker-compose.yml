@@ -1,0 +1,59 @@
+version: "3"
+services:
+  nginx:
+    image: registry.cn-qingdao.aliyuncs.com/ponycool_public/nginx-1.15.5:1.0
+    volumes:
+     # 挂载配置文件
+    - /mnt/cnf/nginx:/etc/nginx/vhost
+    ports:
+    - "80:80"
+    depends_on:
+    - "php73"
+    restart: always
+  # web-php72  
+  php73: 
+    image: registry.cn-qingdao.aliyuncs.com/ponycool_public/php-7.3:1.0
+    volumes: 
+    - /mnt/cnf/php:/etc/apache2/vhost
+    - /mnt/web:/var/www
+    ports:
+    - "8000:8000"
+    - "8001:8001"
+    - "9000:9000"
+    restart: always
+  # mariadb 10.4.0
+  mariadb:
+    image: registry.cn-qingdao.aliyuncs.com/ponycool_public/mariadb-10.4:1.0
+    volumes:
+    - /var/data/mariadb:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 7FuvYrIXlpFxBRepAX0xwtl6udk8rLiA
+    ports:
+    - "3306:3306"
+    restart: always
+  # # mongo
+  # mongo:
+  #   image: registry.cn-qingdao.aliyuncs.com/dev_ponycool/dev-mongo:v1.0
+  #   volumes:
+  #   - /var/data/mongo:/data/db
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: root
+  #     MONGO_INITDB_ROOT_PASSWORD: yjPCTlPCCrz6kJJy37vwJugMMeVUF921
+  #   ports:
+  #   - "27017:27017"
+  #   restart: always
+  # # etcd 服务治理
+  # etcd: 
+  #   image: registry.cn-qingdao.aliyuncs.com/dev_ponycool/etcd-3.3.10:v1.0
+  #   volumes:
+  #   - /var/data/etcd:/var/data/etcd
+  #   environment:
+  #   - ETCDCTL_API=3
+  #   command:
+  #     /usr/local/bin/etcd
+  #     -name etcd0
+  #     -data-dir /var/data/etcd/etcd-data
+  #   ports:
+  #   - "2379:2379"
+  #   - "2380:2380"
+  #   restart: always
