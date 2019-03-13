@@ -1,0 +1,29 @@
+# nextcloud version 15
+version: "3"
+services:
+  nextcloud:
+    image: registry.cn-qingdao.aliyuncs.com/ponycool_public/nextcloud-15:1.0
+    volumes:
+     # 挂载配置文件
+    - /home/nextcloud:/var/www/html
+    - /home/nextcloud/apps:/var/www/html/custom_apps
+    - /home/nextcloud/config:/var/www/html/config
+    - /home/nextcloud/data:/var/www/html/data
+#   - /home/nextcloud/theme:/var/www/html/themes/<YOUR_CUSTOM_THEME>
+    ports:
+    - "80:80"
+    depends_on:
+    - "mariadb"
+    restart: always
+   
+  # mariadb 10.4.0
+  mariadb:
+    image: registry.cn-qingdao.aliyuncs.com/ponycool_public/mariadb-10.4:1.0
+    volumes:
+    - /home/mariadb:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: nextcloud
+      MYSQL_ROOT_PASSWORD: 7FuvYrIXlpFxBRepAX0xwtl6udk8rLiA
+    ports:
+    - "3306:3306"
+    restart: always
