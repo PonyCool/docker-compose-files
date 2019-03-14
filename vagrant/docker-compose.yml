@@ -10,9 +10,9 @@ services:
     depends_on:
     - "php73"
     restart: always
-  # web-php72  
+  # web-php73  
   php73: 
-    image: registry.cn-qingdao.aliyuncs.com/ponycool_public/php-7.3:1.0
+    image: registry.cn-qingdao.aliyuncs.com/ponycool_public/php-7.3:3.0
     volumes: 
     - /mnt/cnf/php:/etc/apache2/vhost
     - /mnt/web:/var/www
